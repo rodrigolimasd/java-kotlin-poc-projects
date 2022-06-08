@@ -1,6 +1,7 @@
 package com.rodtech.javapoprojects.pocspringdatajpa.service.impl;
 
 import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionDTO;
+import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionFilterDTO;
 import com.rodtech.javapoprojects.pocspringdatajpa.exception.TransactionNotFoundException;
 import com.rodtech.javapoprojects.pocspringdatajpa.model.TransactionEntity;
 import com.rodtech.javapoprojects.pocspringdatajpa.repository.TransactionEntityRepository;
@@ -112,6 +113,12 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Page<TransactionDTO> getByNote(String note, Pageable page) {
         return transactionEntityRepository.findAllByNoteContainsOrderByDate(note, page)
+                .map(TransactionDTO::buildFromEntity);
+    }
+
+    @Override
+    public Page<TransactionDTO> filter(TransactionFilterDTO filterDTO, Pageable page) {
+        return transactionEntityRepository.filter(filterDTO, page)
                 .map(TransactionDTO::buildFromEntity);
     }
 

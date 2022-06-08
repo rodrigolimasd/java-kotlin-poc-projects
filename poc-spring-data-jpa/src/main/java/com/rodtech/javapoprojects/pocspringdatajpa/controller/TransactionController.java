@@ -1,6 +1,7 @@
 package com.rodtech.javapoprojects.pocspringdatajpa.controller;
 
 import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionDTO;
+import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionFilterDTO;
 import com.rodtech.javapoprojects.pocspringdatajpa.service.TransactionService;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
@@ -65,6 +66,14 @@ public class TransactionController {
         log.info("list transactions by note {} ", note);
         Page<TransactionDTO> pageList = transactionService.getByNote(note, page);
         log.info("transactions {} ", pageList);
+        return ResponseEntity.ok(pageList);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<TransactionDTO>> filter(TransactionFilterDTO filterDTO, Pageable page){
+        log.info("filter transactions {} ", filterDTO);
+        Page<TransactionDTO> pageList = transactionService.filter(filterDTO, page);
+        log.info("transactions filted {} ", pageList);
         return ResponseEntity.ok(pageList);
     }
 

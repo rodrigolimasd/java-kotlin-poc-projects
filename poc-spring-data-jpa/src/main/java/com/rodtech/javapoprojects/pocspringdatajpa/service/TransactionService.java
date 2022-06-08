@@ -1,6 +1,7 @@
 package com.rodtech.javapoprojects.pocspringdatajpa.service;
 
 import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionDTO;
+import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionFilterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,6 +18,8 @@ public interface TransactionService {
     List<TransactionDTO> listByYearMonth(Integer year, Integer month);
     List<TransactionDTO> getByDate(LocalDate date);
     Page<TransactionDTO> getByNote(String note, Pageable page);
+    Page<TransactionDTO> filter(TransactionFilterDTO filterDTO, Pageable page);
     void delete(Long id);
     void deleteBatch(List<TransactionDTO> transactionDTOList);
+
 }

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface TransactionEntityRepository extends JpaRepository<TransactionEntity, Long> {
+public interface TransactionEntityRepository extends JpaRepository<TransactionEntity, Long>, TransactionEntityRepositoryQueryCriteria {
 
     Page<TransactionEntity> findAllByOrderByDate(Pageable pageable);
     List<TransactionEntity> findByDateBetweenOrderByDate(LocalDate start, LocalDate end);
