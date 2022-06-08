@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,12 +24,18 @@ public class TransactionDTO {
 
     private LocalDateTime edit;
 
+    @NotNull
     private LocalDate date;
 
+    @NotNull
+    @PositiveOrZero
     private BigDecimal income;
 
+    @NotNull
+    @PositiveOrZero
     private BigDecimal expense;
 
+    @NotNull
     private BigDecimal balanceValue;
 
     private String note;

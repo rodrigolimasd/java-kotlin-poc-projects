@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v1/transaction")
 public class TransactionController {
@@ -29,12 +31,12 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDTO> create(@RequestBody TransactionDTO transactionDTO){
+    public ResponseEntity<TransactionDTO> create(@RequestBody @Valid TransactionDTO transactionDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.create(transactionDTO));
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody TransactionDTO transactionDTO){
+    public ResponseEntity<?> update(@RequestBody @Valid TransactionDTO transactionDTO){
         transactionService.update(transactionDTO);
         return ResponseEntity.noContent().build();
     }
