@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
+@Table(name = "transaction_tb")
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionEntity {
@@ -23,20 +23,24 @@ public class TransactionEntity {
     private Long id;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime create;
+    private LocalDateTime created;
 
     @Column
-    @LastModifiedDate
     private LocalDateTime edit;
 
+    @Column
     private LocalDate date;
 
+    @Column
     private BigDecimal income;
 
+    @Column
     private BigDecimal expense;
 
+    @Column
     private BigDecimal balanceValue;
 
+    @Column
     private String note;
 
 }
