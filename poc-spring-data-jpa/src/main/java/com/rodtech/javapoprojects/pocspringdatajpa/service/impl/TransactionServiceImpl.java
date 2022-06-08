@@ -117,4 +117,12 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEntity entity = transactionEntityRepository.findById(id).orElseThrow();
         transactionEntityRepository.delete(entity);
     }
+
+    @Override
+    public void deleteBatch(List<TransactionDTO> transactionDTOList) {
+        transactionEntityRepository.deleteAllById(
+                transactionDTOList.stream().filter(p-> p.getId()!=null && p.getId() > 0)
+                        .map(TransactionDTO::getId).collect(Collectors.toList())
+        );
+    }
 }

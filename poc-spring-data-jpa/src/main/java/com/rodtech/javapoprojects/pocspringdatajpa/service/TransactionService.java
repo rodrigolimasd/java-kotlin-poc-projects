@@ -18,5 +18,5 @@ public interface TransactionService {
     List<TransactionDTO> getByDate(LocalDate date);
     Page<TransactionDTO> getByNote(String note, Pageable page);
     void delete(Long id);
-
+    void deleteBatch(List<TransactionDTO> transactionDTOList);
 }

@@ -1,10 +1,7 @@
 package com.rodtech.javapoprojects.pocspringdatajpa.dto;
 
 import com.rodtech.javapoprojects.pocspringdatajpa.model.TransactionEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class TransactionDTO {
 
     private Long id;
