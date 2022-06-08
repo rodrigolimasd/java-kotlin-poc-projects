@@ -1,6 +1,7 @@
 package com.rodtech.javapoprojects.pocspringdatajpa.service.impl;
 
 import com.rodtech.javapoprojects.pocspringdatajpa.dto.TransactionDTO;
+import com.rodtech.javapoprojects.pocspringdatajpa.exception.TransactionNotFoundException;
 import com.rodtech.javapoprojects.pocspringdatajpa.model.TransactionEntity;
 import com.rodtech.javapoprojects.pocspringdatajpa.repository.TransactionEntityRepository;
 import com.rodtech.javapoprojects.pocspringdatajpa.service.TransactionService;
@@ -44,12 +45,14 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDTO getById(Long id) {
-        return TransactionDTO.buildFromEntity(transactionEntityRepository.findById(id).orElseThrow());
+        return TransactionDTO.buildFromEntity(transactionEntityRepository.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction not found")));
     }
 
     @Override
     public TransactionDTO update(TransactionDTO transaction) {
-        TransactionEntity entity = transactionEntityRepository.findById(transaction.getId()).orElseThrow();
+        TransactionEntity entity = transactionEntityRepository.findById(transaction.getId())
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction not found"));
 
         entity.setEdit(LocalDateTime.now());
         entity.setDate(transaction.getDate());
@@ -114,7 +117,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void delete(Long id) {
-        TransactionEntity entity = transactionEntityRepository.findById(id).orElseThrow();
+        TransactionEntity entity = transactionEntityRepository.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction not found"));
         transactionEntityRepository.delete(entity);
     }
 
