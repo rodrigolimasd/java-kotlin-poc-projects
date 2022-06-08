@@ -59,6 +59,30 @@ curl --location --request POST 'http://localhost:8080/v1/transaction' \
 ```
 Response Status Code: **201**
 
+**Create Bath Transactions**
+
+```
+curl --location --request POST 'http://localhost:8080/v1/transaction/batch' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "date": "2022-05-01",
+        "income": 0.00,
+        "expense": 0.00,
+        "balanceValue": 0.00,
+        "note": "initial month"
+    },
+    {
+        "date": "2022-03-03",
+        "income": 0.00,
+        "expense": 0.00,
+        "balanceValue": 0.00,
+        "note": null
+    }
+]'
+```
+Response Status Code: **201**
+
 ---
 **Find A Transaction By ID**
 
@@ -68,6 +92,26 @@ curl --location --request GET 'http://localhost:8080/v1/transaction/1'
 Response Status Code **200**
 ```
 {"id":1,"created":"2022-05-01T11:00:59","edit":null,"date":"2022-05-01","income":10000.00,"expense":0.00,"balanceValue":10000.00,"note":"salary"}
+```
+
+**Find Transactions By Date**
+```
+curl --location --request GET 'http://localhost:8080/v1/transaction/date/2022-05-31?page=0&size=200'
+```
+Response Status Code **200**
+```
+[
+    {
+        "id": 24,
+        "created": "2022-05-01T12:21:01",
+        "edit": "2022-05-01T13:04:00",
+        "date": "2022-05-31",
+        "income": 0.00,
+        "expense": 0.00,
+        "balanceValue": 0.00,
+        "note": "end month"
+    }
+]
 ```
 ---
 **Update A Transaction**
