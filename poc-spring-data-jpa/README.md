@@ -44,7 +44,7 @@ $ mvn clean test
 
 ### Consuming the API
 
-**Create An Transaction**
+**Create A Transaction**
 
 ```
 curl --location --request POST 'http://localhost:8080/v1/transaction' \
@@ -60,7 +60,7 @@ curl --location --request POST 'http://localhost:8080/v1/transaction' \
 Response Status Code: **201**
 
 ---
-**Find Transaction By ID**
+**Find A Transaction By ID**
 
 ```
 curl --location --request GET 'http://localhost:8080/v1/transaction/1'
@@ -70,7 +70,7 @@ Response Status Code **200**
 {"id":1,"created":"2022-05-01T11:00:59","edit":null,"date":"2022-05-01","income":10000.00,"expense":0.00,"balanceValue":10000.00,"note":"salary"}
 ```
 ---
-**Update An Transaction**
+**Update A Transaction**
 ```
 curl --location --request PUT 'http://localhost:8080/v1/transaction' \
 --header 'Content-Type: application/json' \
@@ -134,7 +134,7 @@ Response Status Code **200**
 }
 ```
 ---
-**Delete An Transaction**
+**Delete A Transaction**
 ```
 curl --location --request DELETE 'http://localhost:8080/v1/transaction/1'
 ```
