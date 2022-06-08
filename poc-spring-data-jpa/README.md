@@ -228,6 +228,13 @@ curl --location --request DELETE 'http://localhost:8080/v1/transaction/1'
 Response Status Code **204**
 
 ---
+
+### Consuming the API with swagger
+
+It is also possible to test and consume the API with Swagger.
+
+**Swagger** Endpoint: http://localhost:8080/swagger-ui.html
+
 ###References
 
 [Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
