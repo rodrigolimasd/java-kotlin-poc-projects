@@ -9,5 +9,6 @@ public interface TransactionService {
     TransactionDTO getById(Long id);
     TransactionDTO update(TransactionDTO transaction);
     Page<TransactionDTO> list(Pageable page);
+    Page<TransactionDTO> listByYearMonth(Integer year, Integer month, Pageable page);
     void delete(Long id);
 }

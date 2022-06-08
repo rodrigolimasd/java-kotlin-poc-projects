@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -49,7 +50,17 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Page<TransactionDTO> list(Pageable page) {
-        return transactionEntityRepository.findAll(page).map(TransactionDTO::buildFromEntity);
+        return transactionEntityRepository.findAllByOrderByDate(page).map(TransactionDTO::buildFromEntity);
+    }
+
+    @Override
+    public Page<TransactionDTO> listByYearMonth(Integer year, Integer month, Pageable page) {
+
+        LocalDate start = LocalDate.now().withDayOfMonth(1).withMonth(month).withYear(year);
+        LocalDate end = start.withDayOfMonth(start.getMonth().length(start.isLeapYear()));
+
+        return transactionEntityRepository.findByDateBetweenOrderByDate(start, end, page)
+                .map(TransactionDTO::buildFromEntity);
     }
 
     @Override

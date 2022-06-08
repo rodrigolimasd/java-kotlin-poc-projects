@@ -133,9 +133,58 @@ Response Status Code **200**
     "empty": false
 }
 ```
+
+**Filter transaction By Year and Month**
+
+```
+curl --location --request GET 'http://localhost:8080/v1/transaction/year/2022/month/5?page=0&size=200'
+```
+
+Response Status Code **200**
+```
+{
+    "content": [
+        {
+            ...
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
+        },
+        "pageNumber": 0,
+        "pageSize": 2,
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+    },
+    "totalPages": 1,
+    "totalElements": 1,
+    "last": true,
+    "numberOfElements": 1,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "first": true,
+    "number": 0,
+    "size": 2,
+    "empty": false
+}
+```
+
 ---
 **Delete A Transaction**
 ```
 curl --location --request DELETE 'http://localhost:8080/v1/transaction/1'
 ```
 Response Status Code **204**
+
+---
+###References
+
+[Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
+[Flyway Mysql](https://flywaydb.org/documentation/database/mysql)

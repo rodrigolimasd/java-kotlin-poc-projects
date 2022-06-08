@@ -30,6 +30,11 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.list(page));
     }
 
+    @GetMapping("year/{year}/month/{month}")
+    public ResponseEntity<Page<TransactionDTO>> expensiveByMonth(@PathVariable Integer year, @PathVariable Integer month, Pageable page){
+        return ResponseEntity.ok(transactionService.listByYearMonth(year, month, page));
+    }
+
     @PostMapping
     public ResponseEntity<TransactionDTO> create(@RequestBody @Valid TransactionDTO transactionDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.create(transactionDTO));
