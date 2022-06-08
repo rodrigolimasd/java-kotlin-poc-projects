@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: poc-spring-data-jpa
+
+  datasource:
+    username: root
+    password: mysqlpass
+    url: jdbc:mysql://localhost:3306/poc_sp_data_jpa?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=true&serverTimezone=UTC
+
+  jpa:
+    show-sql: false
