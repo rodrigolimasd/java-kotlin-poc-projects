@@ -220,6 +220,45 @@ Response Status Code **200**
 }
 ```
 
+**Filter Transaction With Query Params**
+
+```
+curl --location --request GET 'http://localhost:8080/v1/transaction/filter?startDate=2022-03-01&endDate=2022-05-31&page=0&size=50&incomeFrom=10500.00&incomeUpTo=10000.00&expense=1000&expenseFrom=1000&expenseUpTo=2000&balanceValue=500&balanceValueFrom=3000&balanceValueUpTo=5000'
+```
+Response Status Code **200**
+
+```
+{
+    "content": [
+            ...
+    ],
+    "pageable": {
+        "sort": {
+            "unsorted": true,
+            "sorted": false,
+            "empty": true
+        },
+        "pageSize": 50,
+        "pageNumber": 0,
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+    },
+    "totalElements": 0,
+    "totalPages": 0,
+    "last": true,
+    "numberOfElements": 0,
+    "sort": {
+        "unsorted": true,
+        "sorted": false,
+        "empty": true
+    },
+    "number": 0,
+    "first": true,
+    "size": 50,
+    "empty": true
+}
+```
 ---
 **Delete A Transaction**
 ```
