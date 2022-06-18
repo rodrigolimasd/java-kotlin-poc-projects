@@ -22,20 +22,25 @@ public class RabbitMQBroadcastConfig {
     @Value("${broker.queue.transaction-bank}")
     public String TOPIC_QUEUE_BANK_NAME;
 
+    @Value("${broker.queue.transaction}")
+    public String TOPIC_QUEUE_TRANSACTION_NAME;
+
     @Value("${broker.exchange}")
     public String TOPIC_EXCHANGE_NAME;
 
     public static final String BINDING_PATTERN_CREDIT_CARD = "*.credit-card.*";
     public static final String BINDING_PATTERN_BANK = "*.bank.*";
+    public static final String BINDING_PATTERN_GENERAL = "*.general.*";
 
     @Bean
     public Declarables topicBindings() {
         Queue topicQueueCreditCard = new Queue(TOPIC_QUEUE_CREDIT_CARD_NAME, NON_DURABLE);
         Queue topicQueueBank = new Queue(TOPIC_QUEUE_BANK_NAME, NON_DURABLE);
+        Queue topicQueueTransactions = new Queue(TOPIC_QUEUE_TRANSACTION_NAME, NON_DURABLE);
 
         TopicExchange topicExchange = new TopicExchange(TOPIC_EXCHANGE_NAME, NON_DURABLE, false);
 
-        return new Declarables(topicQueueCreditCard, topicQueueBank, topicExchange,
+        return new Declarables(topicQueueCreditCard, topicQueueBank, topicQueueTransactions, topicExchange,
                 BindingBuilder
                     .bind(topicQueueCreditCard)
                     .to(topicExchange)
@@ -43,7 +48,12 @@ public class RabbitMQBroadcastConfig {
                 BindingBuilder
                     .bind(topicQueueBank)
                     .to(topicExchange)
-                    .with(BINDING_PATTERN_BANK));
+                    .with(BINDING_PATTERN_BANK),
+                BindingBuilder
+                    .bind(topicQueueTransactions)
+                    .to(topicExchange)
+                    .with(BINDING_PATTERN_GENERAL)
+        );
     }
 
     @Bean

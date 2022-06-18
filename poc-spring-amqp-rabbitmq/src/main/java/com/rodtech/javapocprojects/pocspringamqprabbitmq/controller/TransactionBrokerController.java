@@ -1,7 +1,7 @@
 package com.rodtech.javapocprojects.pocspringamqprabbitmq.controller;
 
 import com.rodtech.javapocprojects.pocspringamqprabbitmq.dto.TransactionDTO;
-import com.rodtech.javapocprojects.pocspringamqprabbitmq.service.TrasactionService;
+import com.rodtech.javapocprojects.pocspringamqprabbitmq.service.MessageBrokerService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +17,16 @@ import javax.validation.Valid;
 @RequestMapping("/v1/transaction")
 public class TransactionBrokerController {
 
-    private final TrasactionService trasactionService;
+    private final MessageBrokerService messageBrokerService;
 
-    public TransactionBrokerController(TrasactionService trasactionService) {
-        this.trasactionService = trasactionService;
+    public TransactionBrokerController(MessageBrokerService messageBrokerService) {
+        this.messageBrokerService = messageBrokerService;
     }
 
     @PostMapping
     public ResponseEntity<TransactionDTO> create(@RequestBody @Valid TransactionDTO transactionDTO){
         log.info("process transaction {} ", transactionDTO);
-        trasactionService.sendTransaction(transactionDTO);
+        messageBrokerService.sendTransaction(transactionDTO);
         log.info("transaction processed {} ", transactionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionDTO);
     }

@@ -28,9 +28,6 @@ $ cd java-poc-projects/poc-spring-amqp-rabbitmq
 ````
 ### Running the Development
 
-After installed RabbiMQ make login and create the following queue:
-**com.rodtech.javapocprojects.topic.transaction**
-
 **Running with Maven**
 ```
 $ mvn spring-boot:run -Dspring-boot.run.profiles=dev
@@ -46,8 +43,49 @@ $ mvn clean test
 
 ### Consuming the API
 
-...
+**Producer a Transaction on Queue Bank**
 
+```
+curl --location --request POST 'http://localhost:8091/v1/transaction' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "date": "2022-03-01",
+        "income": 500.00,
+        "expense": 0.00,
+        "balanceValue": 500.00,
+        "note": "initial month",
+        "type":"BANK"
+}'
+```
+
+**Producer a Transaction on Queue Credit Card**
+
+```
+curl --location --request POST 'http://localhost:8091/v1/transaction' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "date": "2022-03-01",
+        "income": 500.00,
+        "expense": 0.00,
+        "balanceValue": 500.00,
+        "note": "initial month",
+        "type":"CREDIT_CARD"
+}'
+```
+
+**Producer and Consumer a Transaction on Queue General**
+
+```
+curl --location --request POST 'http://localhost:8091/v1/transaction' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "date": "2022-03-01",
+        "income": 500.00,
+        "expense": 0.00,
+        "balanceValue": 500.00,
+        "note": "initial month"
+}'
+```
 
 ### References
 
