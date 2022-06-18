@@ -12,3 +12,5 @@ broker:
   exchange: com.rodtech.javapocprojects.topic.exchange
   queue:
     transaction: com.rodtech.javapocprojects.topic.transaction
+    transaction-credit-card: com.rodtech.javapocprojects.topic.transaction.credit-card
+    transaction-bank: com.rodtech.javapocprojects.topic.transaction.bank
