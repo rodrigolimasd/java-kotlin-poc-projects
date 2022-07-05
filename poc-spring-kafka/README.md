@@ -6,7 +6,7 @@ It is a API built with Java 11 + Spring Boot 2.7 + Spring Kafka for producer and
 
 ### Prerequisites
 
-To run this project in development mode, you will need to have a basic environment with Java JDK 11+ and Maven 3.5.4+ installed. To use the database, you will need to have MySQL installed and running on your machine on the default port (3306).
+To run this project in development mode, you will need to have a basic environment with Java JDK 11+ and Maven 3.5.4+ installed.
 To use the Kafka, you will need to have Kafka installed and running on your machine on the port (29092).
 
 ### Tips: Run Kafka Single Node on Docker
@@ -37,4 +37,17 @@ To run the tests use the following command
 
 ```
 $ mvn clean test
+```
+
+### Consuming the API
+
+**Producer a Event on Topic Events**
+
+```
+curl --location --request POST 'localhost:8080/v1/events' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "title":"vai",
+    "description":"description"
+}'
 ```
