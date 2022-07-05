@@ -3,6 +3,8 @@ package com.rodtech.pocspringkafka.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rodtech.pocspringkafka.model.Event;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -18,6 +20,7 @@ import java.time.LocalDate;
 @Component
 public class EventProducer {
 
+    private static Logger log = LoggerFactory.getLogger(EventProducer.class);
     private final KafkaTemplate<String, String> template;
 
     @Value("${broken.topics.events-topic}")
@@ -40,13 +43,11 @@ public class EventProducer {
         future.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onSuccess(SendResult<String, String> result) {
-                System.out.println("Sent message=[" + message +
-                        "] with offset=[" + result.getRecordMetadata().offset() + "]");
+                log.info("sent messge = {} with offset {} ", message, result.getRecordMetadata().offset());
             }
             @Override
             public void onFailure(Throwable ex) {
-                System.out.println("Unable to send message=["
-                        + message + "] due to : " + ex.getMessage());
+                log.error("failed to sent message: {} ", ex.getMessage());
             }
         });
 
