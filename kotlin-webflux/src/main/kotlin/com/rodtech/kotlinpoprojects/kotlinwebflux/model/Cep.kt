@@ -7,5 +7,5 @@ data class Cep(
         val bairro: String,
         val localidade: String,
         val uf: String,
-        val geoLocation: GeoLocation
+        val geoLocation: GeoLocation? = null
 )
