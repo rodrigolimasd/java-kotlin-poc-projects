@@ -18,6 +18,7 @@ class CepService(
                 .uri("$cep/json/")
                 .retrieve()
                 .bodyToMono(Cep::class.java)
+                .flatMap { fetchGeolocation(it) }
     }
 
     fun searchCepsByStreet(street: String): Flux<Cep> {
@@ -26,16 +27,18 @@ class CepService(
             .uri("https://viacep.com.br/ws/$_street/json/")
             .retrieve()
             .bodyToFlux(Cep::class.java)
-            .flatMap { cep ->
-                webClient.get()
-                    .uri("https://maps.googleapis.com/maps/api/geocode/json")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .attribute("address", "${cep.logradouro}, ${cep.localidade} - ${cep.uf}")
-                    .retrieve()
-                    .bodyToMono(GeoLocation::class.java)
-                    .map { geoLocation ->
-                        cep.copy(geoLocation = geoLocation)
-                    }
+            .flatMap { fetchGeolocation(it) }
+    }
+
+    private fun fetchGeolocation(cep: Cep): Mono<Cep> {
+        return  webClient.get()
+            .uri("https://maps.googleapis.com/maps/api/geocode/json")
+            .accept(MediaType.APPLICATION_JSON)
+            .attribute("address", "${cep.logradouro}, ${cep.localidade} - ${cep.uf}")
+            .retrieve()
+            .bodyToMono(GeoLocation::class.java)
+            .map { geoLocation ->
+                cep.copy(geoLocation = geoLocation)
             }
     }
 }
