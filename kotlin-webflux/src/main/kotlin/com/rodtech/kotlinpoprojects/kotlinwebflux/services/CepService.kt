@@ -15,7 +15,7 @@ class CepService(
         return webClient.get()
                 .uri("$cep/json/")
                 .retrieve()
-                .bodyToMono(object : ParameterizedTypeReference<Cep>() {})
+                .bodyToMono(Cep::class.java)
     }
 
     fun searchCepsByStreet(street: String): Flux<Cep> {
@@ -23,7 +23,6 @@ class CepService(
         return webClient.get()
             .uri("https://viacep.com.br/ws/$_street/json/")
             .retrieve()
-            .bodyToFlux(object : ParameterizedTypeReference<Cep>() {})
-
+            .bodyToFlux(Cep::class.java)
     }
 }
