@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @RestController
@@ -17,6 +18,11 @@ class CepController(
     @GetMapping("/{cep}")
     fun getCep(@PathVariable cep:String): Mono<Cep> {
         return cepService.getCep(cep)
+    }
+
+    @GetMapping("/cep/street/{street}")
+    fun searchCepsByStreet(@PathVariable street: String): Flux<Cep> {
+        return cepService.searchCepsByStreet(street)
     }
 
 }
