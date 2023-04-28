@@ -59,7 +59,7 @@ class CepService(
             }
     }
 
-    private fun calculateDistance(cep1: Cep, cep2: Cep): Double {
+    fun calculateDistance(cep1: Cep, cep2: Cep): Double {
         val lat1 = cep1.geoLocation?.lat?.toDouble() ?: 0.0
         val lon1 = cep1.geoLocation?.lng?.toDouble() ?: 0.0
         val lat2 = cep2.geoLocation?.lat?.toDouble() ?: 0.0
@@ -76,6 +76,12 @@ class CepService(
         val d = R * c
 
         return d
+    }
 
+    fun searchCepsByState(state: String): Flux<Cep> {
+        return webClient.get()
+            .uri("${state}/json/")
+            .retrieve()
+            .bodyToFlux(Cep::class.java)
     }
 }
