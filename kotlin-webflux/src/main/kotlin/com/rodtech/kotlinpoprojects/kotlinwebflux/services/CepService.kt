@@ -59,7 +59,7 @@ class CepService(
             }
     }
 
-    fun calculateDistance(cep1: Cep, cep2: Cep): Double {
+    private fun calculateDistance(cep1: Cep, cep2: Cep): Double {
         val lat1 = cep1.geoLocation?.lat?.toDouble() ?: 0.0
         val lon1 = cep1.geoLocation?.lng?.toDouble() ?: 0.0
         val lat2 = cep2.geoLocation?.lat?.toDouble() ?: 0.0
