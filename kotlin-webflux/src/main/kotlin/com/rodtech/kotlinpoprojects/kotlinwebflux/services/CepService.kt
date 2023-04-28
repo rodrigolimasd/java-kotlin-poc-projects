@@ -30,7 +30,7 @@ class CepService(
     fun searchCepsByStreet(street: String): Flux<Cep> {
         val _street = street.trim().replace(" ", "+")
         return webClient.get()
-            .uri("https://viacep.com.br/ws/$_street/json/")
+            .uri("$_street/json/")
             .retrieve()
             .bodyToFlux(Cep::class.java)
             .flatMap { fetchGeolocation(it) }
