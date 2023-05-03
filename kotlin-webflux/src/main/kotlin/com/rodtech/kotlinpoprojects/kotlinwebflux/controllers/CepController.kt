@@ -47,4 +47,9 @@ class CepController(
         return cepService.mergeCepData(listOf(cep1, cep2))
     }
 
+    @GetMapping("/ceps/coordinates")
+    fun getCepsCoordinates(@RequestParam("ceps") ceps: List<String>): Flux<Pair<Double, Double>> {
+        return cepService.getCepsCoordinates(ceps)
+    }
+
 }

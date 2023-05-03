@@ -91,6 +91,16 @@ class CepService(
             .flatMap { fetchGeolocation(it) }
     }
 
+    fun getCepsCoordinates(ceps: List<String>): Flux<Pair<Double, Double>> {
+        val monoCeps = ceps.map { getCep(it) }
+
+        return Flux.merge(monoCeps)
+            .flatMap { cep ->
+                val latitude = cep.geoLocation?.lat?.toDouble() ?: 0.0
+                val longitude = cep.geoLocation?.lng?.toDouble() ?: 0.0
+                Mono.just(Pair(latitude, longitude))
+            }
+    }
 
 
 }
