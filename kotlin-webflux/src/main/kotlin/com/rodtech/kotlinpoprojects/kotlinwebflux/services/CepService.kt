@@ -102,5 +102,32 @@ class CepService(
             }
     }
 
+    fun searchCepsByLocation(latitude: Double, longitude: Double, radius: Double): Flux<Cep> {
+        val R = 6371.0 // earth's average radius in km
+        val maxDistance = radius / R
+
+        return webClient.get()
+            .uri("/json/")
+            .retrieve()
+            .bodyToFlux(Cep::class.java)
+            .flatMap { cep ->
+                val lat = cep.geoLocation?.lat?.toDouble() ?: 0.0
+                val lon = cep.geoLocation?.lng?.toDouble() ?: 0.0
+                val dLat = Math.toRadians(lat - latitude)
+                val dLon = Math.toRadians(lon - longitude)
+                val a = sin(dLat / 2) * sin(dLat / 2) +
+                        cos(Math.toRadians(latitude)) * cos(Math.toRadians(lat)) *
+                        sin(dLon / 2) * sin(dLon / 2)
+                val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+                val d = R * c
+
+                if (d <= maxDistance) {
+                    fetchGeolocation(cep)
+                } else {
+                    Mono.empty()
+                }
+            }
+    }
+
 
 }

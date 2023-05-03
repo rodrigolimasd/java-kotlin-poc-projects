@@ -52,4 +52,13 @@ class CepController(
         return cepService.getCepsCoordinates(ceps)
     }
 
+    @GetMapping("/ceps/location/{latitude}/{longitude}/{radius}")
+    fun searchCepsByLocation(
+        @PathVariable latitude: Double,
+        @PathVariable longitude: Double,
+        @PathVariable radius: Double
+    ): Flux<Cep> {
+        return cepService.searchCepsByLocation(latitude, longitude, radius)
+    }
+
 }
