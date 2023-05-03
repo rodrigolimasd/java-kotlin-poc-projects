@@ -84,4 +84,13 @@ class CepService(
             .retrieve()
             .bodyToFlux(Cep::class.java)
     }
+
+    fun mergeCepData(ceps: List<String>): Flux<Cep> {
+        val monoCeps = ceps.map { getCep(it) }
+        return Flux.merge(monoCeps)
+            .flatMap { fetchGeolocation(it) }
+    }
+
+
+
 }

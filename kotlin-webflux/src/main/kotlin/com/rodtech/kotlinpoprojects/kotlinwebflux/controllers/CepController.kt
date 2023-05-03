@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.util.*
 
 @RestController
 @RequestMapping("/cep")
@@ -39,6 +40,11 @@ class CepController(
                     .switchIfEmpty(Mono.error(ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found")))
             }
             .switchIfEmpty(Mono.error(ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found")))
+    }
+
+    @GetMapping("/cep/merged/{cep1}/{cep2}")
+    fun getMergedCepData(@PathVariable cep1: String, @PathVariable cep2: String): Flux<Cep> {
+        return cepService.mergeCepData(listOf(cep1, cep2))
     }
 
 }
