@@ -22,8 +22,18 @@ public class EventController {
         return eventService.getAllEvents();
     }
 
+    @GetMapping("{id}")
+    public List<EventDto> getEventById(@PathVariable String id) {
+        return eventService.getEventsById(id);
+    }
+
     @PostMapping
     public EventDto createEvent(@RequestBody EventDto eventDto) {
         return eventService.createNewEvent(eventDto);
+    }
+
+    @PostMapping("/batch")
+    public List<EventDto> createEvents(@RequestBody List<EventDto> eventDtos) {
+        return eventService.createNewEvents(eventDtos);
     }
 }
