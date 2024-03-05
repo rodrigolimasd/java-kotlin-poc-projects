@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -109,10 +107,50 @@ public class EventService {
         return events;
     }
 
-    public List<EventCreatDto> createNewEvents(List<EventCreatDto> eventCreatDtos) {
-        return eventCreatDtos.stream()
-                .map(this::createNewEvent)
-                .toList();
+    public List<EventDto> createNewEvents(String id, List<EventCreatDto> eventCreatDtos) {
+        List<Event> events = eventCreatDtos.stream()
+                .map(p -> Event.builder()
+                        .id(id)
+                        .date(p.date())
+                        .expense(p.expense())
+                        .income(p.income())
+                        .note(p.note())
+                        .dateEventId("%s#%s".formatted(p.date().toString(), UUID.randomUUID().toString()))
+                        .createDate(LocalDateTime.now())
+                        .build()).collect(Collectors.toList());
+        events = addBatch(id, events);
+
+         return events.stream().map(p -> new EventDto(
+                         p.getId(),
+                         p.getDate(),
+                         p.getExpense(),
+                         p.getIncome(),
+                         p.getBalance(),
+                         p.getNote()
+                 ))
+                 .collect(Collectors.toList());
+    }
+
+    private List<Event> addBatch(String id, List<Event> events) {
+        events = events.stream().sorted(Comparator.comparing(Event::getDate)).toList();
+
+        Event lastEvent = getLastEvent(id, events.get(0).getDate());
+
+        List<Event> afterEvents = getAfterEvents(id, events.get(0).getDate());
+
+        List<Event> mergedEvents = new ArrayList<>();
+        mergedEvents.addAll(events);
+        mergedEvents.addAll(afterEvents);
+
+        mergedEvents = mergedEvents.stream().sorted(Comparator.comparing(Event::getDate)).toList();
+
+        for(Event e: mergedEvents) {
+            calculateBalance(lastEvent, e);
+            lastEvent = e;
+        }
+        saveBatch(mergedEvents);
+
+        return events;
     }
 
     public List<EventDto> getEventsById(String id) {

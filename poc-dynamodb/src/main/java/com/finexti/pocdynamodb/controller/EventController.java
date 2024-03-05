@@ -33,8 +33,8 @@ public class EventController {
         return eventService.createNewEvent(eventCreatDto);
     }
 
-    @PostMapping("/batch")
-    public List<EventCreatDto> createEvents(@RequestBody List<EventCreatDto> eventCreatDtos) {
-        return eventService.createNewEvents(eventCreatDtos);
+    @PostMapping("/batch/{id}")
+    public List<EventDto> createEvents(@PathVariable String id, @RequestBody List<EventCreatDto> eventCreatDtos) {
+        return eventService.createNewEvents(id, eventCreatDtos);
     }
 }
