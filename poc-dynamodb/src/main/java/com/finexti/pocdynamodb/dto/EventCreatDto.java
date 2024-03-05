@@ -2,12 +2,11 @@ package com.finexti.pocdynamodb.dto;
 
 import java.time.LocalDate;
 
-public record EventDto(
+public record EventCreatDto(
         String id,
         LocalDate date,
         double expense,
         double income,
-        double balance,
         String note
 ) {
 }

@@ -1,6 +1,7 @@
 package com.finexti.pocdynamodb.controller;
 
 import com.finexti.pocdynamodb.domain.Event;
+import com.finexti.pocdynamodb.dto.EventCreatDto;
 import com.finexti.pocdynamodb.dto.EventDto;
 import com.finexti.pocdynamodb.service.EventService;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,12 @@ public class EventController {
     }
 
     @PostMapping
-    public EventDto createEvent(@RequestBody EventDto eventDto) {
-        return eventService.createNewEvent(eventDto);
+    public EventCreatDto createEvent(@RequestBody EventCreatDto eventCreatDto) {
+        return eventService.createNewEvent(eventCreatDto);
     }
 
     @PostMapping("/batch")
-    public List<EventDto> createEvents(@RequestBody List<EventDto> eventDtos) {
-        return eventService.createNewEvents(eventDtos);
+    public List<EventCreatDto> createEvents(@RequestBody List<EventCreatDto> eventCreatDtos) {
+        return eventService.createNewEvents(eventCreatDtos);
     }
 }
